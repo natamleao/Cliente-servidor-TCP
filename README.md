@@ -28,7 +28,7 @@ O servidor é implementado em Python e utiliza soquetes (sockets) para estabelec
 
 Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
 
-**Autor:** Eliziane, Lara e Natam
-**Instituição:** Universidad Federal do Ceará (UFC)
-**Disciplina:** Redes de Computadores
-**Data de Conclusão:**
+* **Autor:** Eliziane, Lara e Natam
+* **Instituição:** Universidad Federal do Ceará (UFC)
+* **Disciplina:** Redes de Computadores
+* **Data de Conclusão:**
