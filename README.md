@@ -1,5 +1,5 @@
 <div align="justify">
-  <h1># Trabalho de Redes: Servidor de Comunicação Multifuncional</h1>
+  <h1>Trabalho de Redes: Servidor de Comunicação Multifuncional</h1>
 </div>
 
 <div align="justify">
