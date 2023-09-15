@@ -28,7 +28,7 @@ O servidor é implementado em Python e utiliza soquetes (sockets) para estabelec
 4. Execute o cliente com o comando `python ./client/client_TCP.py` e estabeleça uma conexão com o servidor.
 5. Utilize as opções do cliente para interagir com o servidor, como solicitar curiosidades, obter a hora atual, enviar ou listar arquivos no servidor.
 
-> [!Obs:]
+> [!NOTE:]
 > Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
 
 * **Autores:** Eliziane, Lara e Natam
