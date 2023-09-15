@@ -31,9 +31,6 @@ O servidor é implementado em Python e utiliza soquetes (sockets) para estabelec
 > [!NOTE]
 > Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
 
-> [!NOTE]
-> Highlights information that users should take into account, even when skimming.
-
 * **Autores:** Eliziane, Lara e Natam
 * **Instituição:** Universidade Federal do Ceará (UFC) - Campus Russas
 * **Disciplina:** Redes de Computadores
