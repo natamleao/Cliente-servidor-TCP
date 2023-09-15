@@ -2,7 +2,8 @@
   
 # Trabalho de Redes: Servidor de Comunicação Multifuncional
 
-Este projeto é um exemplo de servidor de comunicação multifuncional desenvolvido como parte de um trabalho acadêmico na disciplina de Redes de Computadores. O servidor é capaz de lidar com múltiplos clientes simultaneamente e oferece várias funcionalidades, incluindo consulta de curiosidades sobre física quântica, obtenção da hora atual do servidor, envio de arquivos e listagem de arquivos no servidor.
+> [!NOTE]
+> Este projeto é um exemplo de servidor de comunicação multifuncional desenvolvido como parte de um trabalho acadêmico na disciplina de Redes de Computadores. O servidor é capaz de lidar com múltiplos clientes simultaneamente e oferece várias funcionalidades, incluindo consulta de curiosidades sobre física quântica, obtenção da hora atual do servidor, envio de arquivos e listagem de arquivos no servidor.
   
 ## Funcionalidades Principais
 
@@ -29,8 +30,7 @@ O servidor é implementado em Python e utiliza soquetes (sockets) para estabelec
 > 4. Execute o cliente com o comando `python ./client/client_TCP.py` e estabeleça uma conexão com o servidor.
 > 5. Utilize as opções do cliente para interagir com o servidor, como solicitar curiosidades, obter a hora atual, enviar ou listar arquivos no servidor.
 
-> [!NOTE]
-> Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
+Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
 
 * **Autores:** Eliziane, Lara e Natam
 * **Instituição:** Universidade Federal do Ceará (UFC) - Campus Russas
