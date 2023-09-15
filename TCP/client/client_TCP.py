@@ -42,7 +42,7 @@ def check_empty_message(client_socket, data):
 # Função de mensagem de boas-vindas
 def welcome_message():
     print('\n+' + 81*'-' + '+')
-    print('+' + 30*'-' + ' Bem-vindo a Rede Órion ' + 31*'-' + '+')
+    print('+' + 28*'-' + ' Bem-vindo à Rede Órion ' + 29*'-' + '+')
     print('+' + 81*'-' + '+')
 
 # Função de exibição das opções do servidor
@@ -52,9 +52,9 @@ def options_message():
     print('+' + 81*'-' + '+')
     print('+-- 1 - Consultar uma curidosidade')
     print('+' + 81*'-' + '+')
-    print('+-- 2 - Horario atual do servidor')
+    print('+-- 2 - Horário atual do servidor')
     print('+' + 81*'-' + '+')
-    print('+-- 3 - Salvar arquivo')
+    print('+-- 3 - Salvar arquivo (download)')
     print('+' + 81*'-' + '+')
     print('+-- 4 - Listar todos os arquivos do servidor')
     print('+' + 81*'-' + '+')
