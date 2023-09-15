@@ -10,6 +10,7 @@ server_address = ('127.0.0.1', 5000)
 def send_with_error_handling(client_socket, data):
     try:
         client_socket.sendall(data.encode('utf-8'))
+        
     except OSError as e:
         # Em caso de erro ao enviar dados, imprime uma mensagem de erro
         print('\n+' + 81*'-' + '+')
@@ -28,6 +29,7 @@ def check_empty_message(client_socket, data):
             print(f'+-- Conexão encerrada por: {client_socket}')
             print('+' + 81*'-' + '+\n')
             return True
+        
         except Exception as e:
             # Em caso de erro ao fechar a conexão, imprime uma mensagem de erro
             print('+' + 81*'-' + '+')
@@ -40,7 +42,7 @@ def check_empty_message(client_socket, data):
 # Função de mensagem de boas-vindas
 def welcome_message():
     print('\n+' + 81*'-' + '+')
-    print('+' + 30*'-' + ' Bem-vindo ao Órion ' + 31*'-' + '+')
+    print('+' + 30*'-' + ' Bem-vindo a Rede Órion ' + 31*'-' + '+')
     print('+' + 81*'-' + '+')
 
 # Função de exibição das opções do servidor
@@ -48,13 +50,13 @@ def options_message():
     print('\n+' + 81*'-' + '+')
     print('+' + 31*'-' + ' Opções do servidor ' + 30*'-' + '+')
     print('+' + 81*'-' + '+')
-    print('+-- 1 - Consulta')
+    print('+-- 1 - Consultar uma curidosidade')
     print('+' + 81*'-' + '+')
-    print('+-- 2 - Hora')
+    print('+-- 2 - Horario atual do servidor')
     print('+' + 81*'-' + '+')
-    print('+-- 3 - Arquivo')
+    print('+-- 3 - Salvar arquivo')
     print('+' + 81*'-' + '+')
-    print('+-- 4 - Listar')
+    print('+-- 4 - Listar todos os arquivos do servidor')
     print('+' + 81*'-' + '+')
     print('+-- 0 - Sair')
     print('+' + 81*'-' + '+')
@@ -64,7 +66,6 @@ def options_message():
 def file_receive(client_socket, file_name):    
     directory = os.path.join(os.path.dirname(__file__), 'file')
     file_path = os.path.join(directory, file_name)
-    
     try:
         file_size_str = client_socket.recv(1024).decode()
         file_size = int(file_size_str)

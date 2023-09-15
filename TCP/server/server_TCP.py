@@ -11,6 +11,7 @@ server_address = ('localhost', 5000)
 def send_with_error_handling(client_socket, data):
     try:
         client_socket.sendall(data.encode('utf-8'))
+        
     except BrokenPipeError as e:
         # Em caso de erro ao enviar dados, imprime uma mensagem de erro
         print('\n+' + 81*'-' + '+')
@@ -20,15 +21,27 @@ def send_with_error_handling(client_socket, data):
 # Função para verificar se a mensagem está vazia e fechar a conexão se estiver
 def check_empty_message(client_socket, addr, data):
     if not data:
-        print('\n+' + 81*'-' + '+')
-        print(f'+-- Conexão encerrada por: {addr}')
-        print('+' + 81*'-' + '+\n')
-        client_socket.close()
-        return True
-    return False
+        try:
+            client_socket.close()
+            # Em caso de conexão fechada, imprime uma mensagem de encerramento
+            print('+' + 81*'-' + '+')
+            print('+' + 81*'-' + '+')
+            print('\n+' + 81*'-' + '+')
+            print(f'+-- Conexão encerrada por: {client_socket}')
+            print('+' + 81*'-' + '+\n')
+            return True
+        
+        except Exception as e:
+            # Em caso de erro ao fechar a conexão, imprime uma mensagem de erro
+            print('+' + 81*'-' + '+')
+            print('+' + 81*'-' + '+')
+            print('\n+' + 81*'-' + '+')
+            print(f'+-- Erro ao fechar a conexão: {str(e)}')
+            print('+' + 81*'-' + '+\n')
+            return False
 
 # Função para enviar uma curiosidade sobre teletransportação quântica
-def query(client_socket):
+def query_curiosity(client_socket):
     curiosity_message = (
         'Você sabia que a teletransportação quântica é um fenômeno no qual o estado' 
         'quântico de uma partícula, como um fóton, pode ser transmitido para uma'
@@ -77,7 +90,7 @@ def hour(client_socket):
         send_with_error_handling(client_socket, error_message_)
 
 # Função para enviar um arquivo ao cliente
-def file(client_socket, file_name):
+def research_file(client_socket, file_name):
     directory = os.path.join(os.path.dirname(__file__), 'file')
     try:
         if file_name in os.listdir(directory):
@@ -97,6 +110,7 @@ def file(client_socket, file_name):
             
             error_message_ = '\n'.join(error_message)
             send_with_error_handling(client_socket, error_message_)
+            
     except Exception as e:
         error_message = [
             '+' + 81*'-' + '+',
@@ -109,7 +123,7 @@ def file(client_socket, file_name):
         send_with_error_handling(client_socket, error_message_)
 
 # Função para listar os arquivos no servidor
-def list(client_socket):
+def files_list(client_socket):
     directory = os.path.join(os.path.dirname(__file__), 'file')
     try:
         files = os.listdir(directory)
@@ -126,6 +140,7 @@ def list(client_socket):
 
         saved_files_message_ = '\n'.join(saved_files_message)
         send_with_error_handling(client_socket, saved_files_message_)
+        
     except Exception as e:
         error_message = [
             '+' + 81*'-' + '+',
@@ -150,7 +165,7 @@ def request_file_name(client_socket, addr):
     file_name = client_socket.recv(1024).decode().strip()
     
     if not check_empty_message(client_socket, addr, file_name):
-        file(client_socket, file_name)
+        research_file(client_socket, file_name)
 
 # Função para encerrar a conexão com o cliente
 def exit(client_socket, addr):
@@ -183,6 +198,7 @@ def handle_client(client_socket, addr):
         choice = data.decode().strip()
         try:
             choice = int(choice)
+            
         except ValueError:
             error_message = [
                 '+' + 81*'-' + '+',
@@ -199,13 +215,13 @@ def handle_client(client_socket, addr):
                 exit(client_socket, addr)
                 break
             case 1:
-                query(client_socket)
+                query_curiosity(client_socket)
             case 2:
                 hour(client_socket)
             case 3:
                 request_file_name(client_socket, addr)
             case 4:
-                list(client_socket)
+                files_list(client_socket)
                 
 # Função principal do servidor
 def main():
