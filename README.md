@@ -1,7 +1,9 @@
+<div align="justify">
+  
 # Trabalho de Redes: Servidor de Comunicação Multifuncional
 
 Este projeto é um exemplo de servidor de comunicação multifuncional desenvolvido como parte de um trabalho acadêmico na disciplina de Redes de Computadores. O servidor é capaz de lidar com múltiplos clientes simultaneamente e oferece várias funcionalidades, incluindo consulta de curiosidades sobre física quântica, obtenção da hora atual do servidor, envio de arquivos e listagem de arquivos no servidor.
-
+  
 ## Funcionalidades Principais
 
 ### 1. Curiosidades sobre Física Quântica
@@ -32,3 +34,5 @@ Este projeto é uma demonstração de um servidor de comunicação versátil que
 * **Instituição:** Universidade Federal do Ceará (UFC) - Campus Russas
 * **Disciplina:** Redes de Computadores
 * **Data de Conclusão:** 18/09/2023
+  
+</div>
