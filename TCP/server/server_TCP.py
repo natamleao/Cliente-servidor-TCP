@@ -50,7 +50,8 @@ def calculate_connection_time(start_time):
     seconds = connection_time.total_seconds()
     hours, remainder = divmod(seconds, 3600)
     minutes, seconds = divmod(remainder, 60)
-    formatted_time = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+    formatted_time = f'{int(hours):02}:{int(minutes):02}:{int(seconds):02}'
+    
     return formatted_time
 
 # Função para enviar dados com tratamento de erro
@@ -100,8 +101,8 @@ def query_curiosity(client_socket):
     dashed_line = '+' + 96*'-' + '+'
     line_width = len(dashed_line)
     lines = [curiosity_message[i:i+line_width] for i in range(0, len(curiosity_message), line_width)]
-    
     distributed_curiosity_message = '\n'.join([dashed_line + '\n'] + [dashed_line] + [header] + [dashed_line] + lines + [dashed_line])
+    
     send_with_error_handling(client_socket, distributed_curiosity_message)
 
 # Função para enviar a hora atual do servidor
@@ -115,9 +116,9 @@ def current_time(client_socket):
             '+' + 96*'-' + '+',
             f'Hora: {time.strftime("%H:%M:%S")}',
             '+' + 96*'-' + '+'
-        ]
-        
+        ]    
         current_time_message_ = '\n'.join(current_time_message)
+        
         send_with_error_handling(client_socket, current_time_message_)
         
     except Exception as e:
@@ -126,9 +127,9 @@ def current_time(client_socket):
             '\n+' + 96*'-' + '+',
             f'Erro ao obeter a hora do servidor: {str(e)}',
             '+' + 96*'-' + '+\n'
-        ]
-        
+        ]  
         error_message_ = '\n'.join(error_message)
+        
         send_with_error_handling(client_socket, error_message_)
 
 # Função para enviar um arquivo ao cliente
@@ -142,6 +143,7 @@ def research_file(client_socket, file_name):
             with open(file_path, 'rb') as file:
                 for file_part in file.readlines():
                     client_socket.send(file_part)
+                    
         else:
             error_message = [
                 '+' + 96*'-' + '+',
@@ -149,8 +151,8 @@ def research_file(client_socket, file_name):
                 f'O arquivo "{file_name}" não foi encontrado no banco de dados do servidor',
                 '+' + 96*'-' + '+\n'
             ]
-            
             error_message_ = '\n'.join(error_message)
+            
             send_with_error_handling(client_socket, error_message_)
             
     except Exception as e:
@@ -159,9 +161,9 @@ def research_file(client_socket, file_name):
             '\n+' + 96*'-' + '+',
             f'Erro ao enviar o arquivo: {str(e)}',
             '+' + 96*'-' + '+\n'
-        ]
-        
+        ]  
         error_message_ = '\n'.join(error_message)
+        
         send_with_error_handling(client_socket, error_message_)
 
 # Função para solicitar o nome do arquivo ao cliente
@@ -171,8 +173,8 @@ def request_file_name(client_socket, client_address):
         '\n+' + 96*'-' + '+',
         'Informe o nome do arquivo: '
     ]
-    
     request_message_ = '\n'.join(request_message)
+    
     send_with_error_handling(client_socket, request_message_)
     
     file_name = client_socket.recv(1024).decode().strip()
@@ -197,6 +199,7 @@ def files_list(client_socket):
             saved_files_message.append('+' + 96*'-' + '+')
 
         saved_files_message_ = '\n'.join(saved_files_message)
+        
         send_with_error_handling(client_socket, saved_files_message_)
         
     except Exception as e:
@@ -220,9 +223,9 @@ def exit(client_socket, client_address):
         '\n+' + 96*'-' + '+',
         f'Adeus {client_address}',
         '+' + 96*'-' + '+'
-    ]
-    
+    ] 
     goodbye_message_ = '\n'.join(goodbye_message)
+    
     send_with_error_handling(client_socket, goodbye_message_)
     client_socket.close()
 
@@ -250,8 +253,8 @@ def handle_client(client_socket, client_address):
                 'O valor digitado é inválido',
                 '+' + 96*'-' + '+\n'
             ]
-            
             error_message_ = '\n'.join(error_message)
+            
             send_with_error_handling(client_socket, error_message_)
 
         match choice:

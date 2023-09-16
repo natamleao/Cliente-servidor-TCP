@@ -74,10 +74,12 @@ def find_directory():
     base_directory = os.path.join(os.path.dirname(__file__))
     try:
         items_base_directory = os.listdir(base_directory)
+        
         for item in items_base_directory:
             item_path = os.path.join(base_directory, item)
             if os.path.isdir(item_path) and item.lower() in ['download', 'downloads']:
                 return item_path
+            
             elif os.path.isdir(item_path):
                 return item_path
             
@@ -89,6 +91,7 @@ def find_directory():
         print('\n+' + 96*'-' + '+')
         print(f'+-- O diretório "{base_directory}" não foi encontrado')
         print('+' + 96*'-' + '+')
+        
         return
 
 # Função para receber arquivos
