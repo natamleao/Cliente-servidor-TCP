@@ -80,9 +80,11 @@ def find_directory():
         for item in items_base_directory:
             item_path = os.path.join(base_directory, item)
             if os.path.isdir(item_path) and item.lower() in ['download', 'downloads']:
+                
                 return item_path
             
             elif os.path.isdir(item_path):
+                
                 return item_path
             
         return create_directory('download')
