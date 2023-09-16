@@ -64,9 +64,11 @@ def create_directory(directory_name):
     new_directory_path = os.path.join(base_directory, directory_name)
     try:
         os.mkdir(new_directory_path.encode('utf-8'))
+        
         return new_directory_path
     
     except FileExistsError:
+        
         return new_directory_path
 
 # Função para encontrar um diretório de download

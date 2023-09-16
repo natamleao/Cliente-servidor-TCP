@@ -30,18 +30,39 @@ def check_and_create_log_file():
     return file_path
 
 # Função para registrar uma conexão em um arquivo de log
-def log_connection(client_address, connection_time): 
+def connection_log(client_address): 
     file_path = check_and_create_log_file()
     
     log_message = [
         '\n+' + 96*'-' + '+',
-        f'+-- Conexão estabelecida com: {client_address} - Tempo de conexão: {connection_time}',
-        '+' + 96*'-' + '+'
+        f'+-- Conexão estabelecida com: {client_address}\n'
     ]
 
     log_message_ = '\n'.join(log_message)
     with open(file_path, 'a') as log_file:
         log_file.write(log_message_)
+
+# Função para registar as interações do cliente com o servidor
+def request_logs(choice, data):
+    file_path = check_and_create_log_file()
+    
+    if choice == 1:
+        log_message = '+-- Consultou uma curiosidade no servidor\n'
+        
+    elif choice == 2:
+        log_message = '+-- Consultou a hora atual no servidor\n'
+        
+    elif choice == 3:
+        log_message = f'+-- Solicitou o download de um arquivo do servidor: {data}\n'
+        
+    elif choice == 4:
+        log_message = '+-- Solicitou a lista de nomes de arquivos disponíveis no servidor\n'
+        
+    elif choice == 0:
+        log_message = f'+-- Tempo de conexão: {data}\n+' + 96*'-' + '+\n'
+           
+    with open(file_path, 'a') as log_file:
+        log_file.write(log_message)
 
 # Função para calcular o tempo de conexão
 def calculate_connection_time(start_time):
@@ -85,6 +106,7 @@ def check_empty_message(client_socket, client_address, data):
 
 # Função para enviar uma curiosidade sobre teletransportação quântica
 def query_curiosity(client_socket):
+    request_logs(1, None)
     curiosity_message = (
         'Você sabia que a teletransportação quântica é um fenômeno no qual o estado' 
         'quântico de uma partícula, como um fóton, pode ser transmitido para uma'
@@ -107,6 +129,7 @@ def query_curiosity(client_socket):
 
 # Função para enviar a hora atual do servidor
 def current_time(client_socket):
+    request_logs(2, None)
     try:
         time = datetime.now()
         current_time_message = [
@@ -134,6 +157,7 @@ def current_time(client_socket):
 
 # Função para enviar um arquivo ao cliente
 def research_file(client_socket, file_name):
+    request_logs(3, file_name)
     directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
         if file_name in os.listdir(directory):
@@ -184,6 +208,7 @@ def request_file_name(client_socket, client_address):
 
 # Função para listar os arquivos no servidor
 def files_list(client_socket):
+    request_logs(4, None)
     directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
         files = os.listdir(directory)
@@ -232,6 +257,7 @@ def exit(client_socket, client_address):
 # Função para lidar com um cliente
 def handle_client(client_socket, client_address):
     start_time = datetime.now() 
+    connection_log(client_address)
     
     print('+' + 96*'-' + '+')
     print(f'+-- Conectado em: {client_address}')
@@ -260,6 +286,8 @@ def handle_client(client_socket, client_address):
         match choice:
             case 0:
                 exit(client_socket, client_address)
+                connection_time = calculate_connection_time(start_time)
+                request_logs(choice, connection_time)
                 break
             case 1:
                 query_curiosity(client_socket)
@@ -269,10 +297,7 @@ def handle_client(client_socket, client_address):
                 request_file_name(client_socket, client_address)
             case 4:
                 files_list(client_socket)
-                
-    connection_time = calculate_connection_time(start_time)
-    log_connection(client_address, connection_time)
-               
+                          
 # Função principal do servidor
 def main():
     servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

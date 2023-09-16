@@ -3,5 +3,12 @@
 +------------------------------------------------------------------------------------------------+
 
 +------------------------------------------------------------------------------------------------+
-+-- Conexão estabelecida com: ('127.0.0.1', 52414) - Tempo de conexão: 00:00:30
++-- Conexão estabelecida com: ('127.0.0.1', 45256)
++-- Consultou uma curiosidade no servidor
++-- Consultou a hora atual no servidor
++-- Solicitou o download de um arquivo do servidor: Superposição.docx
++-- Solicitou a lista de nomes de arquivos disponíveis no servidor
++-- Consultou uma curiosidade no servidor
++-- Solicitou a lista de nomes de arquivos disponíveis no servidor
++-- Tempo de conexão: 00:00:30
 +------------------------------------------------------------------------------------------------+
