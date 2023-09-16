@@ -35,7 +35,7 @@ def log_connection(client_address, connection_time):
     
     log_message = [
         '\n+' + 96*'-' + '+',
-        f'Conexão estabelecida com: {client_address} - Tempo de conexão: {connection_time}',
+        f'+-- Conexão estabelecida com: {client_address} - Tempo de conexão: {connection_time}',
         '+' + 96*'-' + '+'
     ]
 
