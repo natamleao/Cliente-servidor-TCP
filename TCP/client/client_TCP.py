@@ -40,7 +40,7 @@ def check_empty_message(client_socket, data):
 # Função de mensagem de boas-vindas
 def welcome_message():
     print('\n+' + 81*'-' + '+')
-    print('+' + 30*'-' + ' Bem-vindo ao Órion ' + 31*'-' + '+')
+    print('+' + 28*'-' + ' Bem-vindo à Rede Órion ' + 29*'-' + '+')
     print('+' + 81*'-' + '+')
 
 # Função de exibição das opções do servidor
@@ -48,13 +48,13 @@ def options_message():
     print('\n+' + 81*'-' + '+')
     print('+' + 31*'-' + ' Opções do servidor ' + 30*'-' + '+')
     print('+' + 81*'-' + '+')
-    print('+-- 1 - Consulta')
+    print('+-- 1 - Consultar uma curiosidade')
     print('+' + 81*'-' + '+')
-    print('+-- 2 - Hora')
+    print('+-- 2 - Horário atual do servidor')
     print('+' + 81*'-' + '+')
-    print('+-- 3 - Arquivo')
+    print('+-- 3 - Baixar arquivo')
     print('+' + 81*'-' + '+')
-    print('+-- 4 - Listar')
+    print('+-- 4 - Listar arquivos do servidor')
     print('+' + 81*'-' + '+')
     print('+-- 0 - Sair')
     print('+' + 81*'-' + '+')
@@ -62,7 +62,7 @@ def options_message():
 
 # Função para receber arquivos
 def file_receive(client_socket, file_name):    
-    directory = os.path.join(os.path.dirname(__file__), 'file')
+    directory = os.path.join(os.path.dirname(__file__), 'files')
     file_path = os.path.join(directory, file_name)
     
     try:
