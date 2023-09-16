@@ -62,10 +62,10 @@ def options_message():
 def create_directory(directory_name):
     base_directory = os.path.join(os.path.dirname(__file__))
     new_directory_path = os.path.join(base_directory, directory_name)
-    
     try:
         os.mkdir(new_directory_path.encode('utf-8'))
         return new_directory_path
+    
     except FileExistsError:
         return new_directory_path
 
@@ -81,7 +81,7 @@ def find_directory():
             elif os.path.isdir(item_path):
                 return item_path
             
-        return create_directory('Download')
+        return create_directory('download')
 
     except FileNotFoundError:
         print('+' + 96*'-' + '+')

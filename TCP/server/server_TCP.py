@@ -7,6 +7,39 @@ import os  # Para manipulação de arquivos e diretórios
 # Define o endereço do servidor como localhost (127.0.0.1) e a porta 5000
 server_address = ('localhost', 5000)
 
+# Função para criar o diretório de Logs
+def create_log_directory(base_directory):
+    new_directory_path = os.path.join(base_directory, 'logs')  
+    try:
+        os.mkdir(new_directory_path.encode('utf-8'))
+        return new_directory_path
+    except FileExistsError:
+        return new_directory_path
+
+# Função para registrar uma conexão em um arquivo de log
+def log_connection(client_address):
+    base_directory = os.path.join(os.path.dirname(__file__))
+    logs_directory = os.path.join(base_directory, 'logs')
+
+    if 'logs' in os.listdir(base_directory):
+        if 'server_log' in os.listdir(logs_directory):
+            file_path = os.path.join(logs_directory, 'server_log')
+        else:
+            file_path = os.path.join(logs_directory, 'server_log')
+    else:
+        os.makedirs(logs_directory)
+        file_path = os.path.join(logs_directory, 'server_log')
+   
+    log_message = [
+        '\n+' + 96*'-' + '+',
+        f'Conexão estabelecida com: {client_address}',
+        '+' + 96*'-' + '+'
+    ]
+
+    log_message_ = '\n'.join(log_message)
+    with open(file_path, 'a') as log_file:
+        log_file.write(log_message_)
+
 # Função para enviar dados com tratamento de erro
 def send_with_error_handling(client_socket, data):
     try:
@@ -87,7 +120,7 @@ def current_time(client_socket):
 
 # Função para enviar um arquivo ao cliente
 def research_file(client_socket, file_name):
-    directory = os.path.join(os.path.dirname(__file__), 'Files')
+    directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
         if file_name in os.listdir(directory):
             file_path = os.path.join(directory, file_name)
@@ -120,7 +153,7 @@ def research_file(client_socket, file_name):
 
 # Função para listar os arquivos no servidor
 def files_list(client_socket):
-    directory = os.path.join(os.path.dirname(__file__), 'Files')
+    directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
         files = os.listdir(directory)
         saved_files_message = [
@@ -182,6 +215,8 @@ def exit(client_socket, client_address):
 
 # Função para lidar com um cliente
 def handle_client(client_socket, client_address):
+    log_connection(client_address)
+    
     print('+' + 96*'-' + '+')
     print(f'+-- Conectado em: {client_address}')
     print('+' + 96*'-' + '+')
