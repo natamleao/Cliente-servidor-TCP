@@ -11,11 +11,12 @@ server_address = ('localhost', 5000)
 def send_with_error_handling(client_socket, data):
     try:
         client_socket.sendall(data.encode('utf-8'))
+        
     except BrokenPipeError as e:
         # Em caso de erro ao enviar dados, imprime uma mensagem de erro
-        print('\n+' + 81*'-' + '+')
+        print('\n+' + 96*'-' + '+')
         print(f'+-- Erro ao enviar dados: {str(e)}')
-        print('+' + 81*'-' + '+\n')
+        print('+' + 96*'-' + '+\n')
 
 # Função para verificar se a mensagem está vazia e fechar a conexão se estiver
 def check_empty_message(client_socket, client_address, data):
@@ -23,19 +24,16 @@ def check_empty_message(client_socket, client_address, data):
         try:
             client_socket.close()
             # Em caso de conexão fechada, imprime uma mensagem de encerramento
-            print('+' + 81*'-' + '+')
-            print('+' + 81*'-' + '+')
-            print('\n+' + 81*'-' + '+')
+            print('\n+' + 96*'-' + '+')
             print(f'+-- Conexão encerrada por: {client_address}')
-            print('+' + 81*'-' + '+\n')
+            print('+' + 96*'-' + '+\n')
             return True
+        
         except Exception as e:
             # Em caso de erro ao fechar a conexão, imprime uma mensagem de erro
-            print('+' + 81*'-' + '+')
-            print('+' + 81*'-' + '+')
-            print('\n+' + 81*'-' + '+')
+            print('\n+' + 96*'-' + '+')
             print(f'+-- Erro ao fechar a conexão: {str(e)}')
-            print('+' + 81*'-' + '+\n')
+            print('+' + 96*'-' + '+\n')
             return False
 
 # Função para enviar uma curiosidade sobre teletransportação quântica
@@ -52,8 +50,8 @@ def query_curiosity(client_socket):
         'intrigantes da física quântica.'
     )
     
-    header = '+' + 34*'-' + ' Curiosidade ' + 34*'-' + '+'
-    dashed_line = '+' + 81*'-' + '+'
+    header = '+' + 42*'-' + ' Curiosidade ' + 41*'-' + '+'
+    dashed_line = '+' + 96*'-' + '+'
     line_width = len(dashed_line)
     lines = [curiosity_message[i:i+line_width] for i in range(0, len(curiosity_message), line_width)]
     
@@ -65,12 +63,12 @@ def current_time(client_socket):
     try:
         time = datetime.now()
         current_time_message = [
-            '+' + 81*'-' + '+',
-            '\n+' + 81*'-' + '+',
-            '+' + 31*'-' + ' Hora do servidor ' + 32*'-' + '+',
-            '+' + 81*'-' + '+',
+            '+' + 96*'-' + '+',
+            '\n+' + 96*'-' + '+',
+            '+' + 39*'-' + ' Hora do servidor ' + 39*'-' + '+',
+            '+' + 96*'-' + '+',
             f'Hora: {time.strftime("%H:%M:%S")}',
-            '+' + 81*'-' + '+'
+            '+' + 96*'-' + '+'
         ]
         
         current_time_message_ = '\n'.join(current_time_message)
@@ -78,10 +76,10 @@ def current_time(client_socket):
         
     except Exception as e:
         error_message = [
-            '+' + 81*'-' + '+',
-            '\n+' + 81*'-' + '+',
+            '+' + 96*'-' + '+',
+            '\n+' + 96*'-' + '+',
             f'Erro ao obeter a hora do servidor: {str(e)}',
-            '+' + 81*'-' + '+\n'
+            '+' + 96*'-' + '+\n'
         ]
         
         error_message_ = '\n'.join(error_message)
@@ -89,32 +87,32 @@ def current_time(client_socket):
 
 # Função para enviar um arquivo ao cliente
 def research_file(client_socket, file_name):
-    directory = os.path.join(os.path.dirname(__file__), 'files')
+    directory = os.path.join(os.path.dirname(__file__), 'Files')
     try:
         if file_name in os.listdir(directory):
             file_path = os.path.join(directory, file_name)
             file_size = os.path.getsize(file_path)
-            print(file_size)
             client_socket.send(str(file_size).encode())
             with open(file_path, 'rb') as file:
                 for file_part in file.readlines():
                     client_socket.send(file_part)
         else:
             error_message = [
-                '+' + 81*'-' + '+',
-                '\n+' + 81*'-' + '+',
+                '+' + 96*'-' + '+',
+                '\n+' + 96*'-' + '+',
                 f'O arquivo "{file_name}" não foi encontrado no banco de dados do servidor',
-                '+' + 81*'-' + '+\n'
+                '+' + 96*'-' + '+\n'
             ]
             
             error_message_ = '\n'.join(error_message)
             send_with_error_handling(client_socket, error_message_)
+            
     except Exception as e:
         error_message = [
-            '+' + 81*'-' + '+',
-            '\n+' + 81*'-' + '+',
+            '+' + 96*'-' + '+',
+            '\n+' + 96*'-' + '+',
             f'Erro ao enviar o arquivo: {str(e)}',
-            '+' + 81*'-' + '+\n'
+            '+' + 96*'-' + '+\n'
         ]
         
         error_message_ = '\n'.join(error_message)
@@ -122,28 +120,29 @@ def research_file(client_socket, file_name):
 
 # Função para listar os arquivos no servidor
 def files_list(client_socket):
-    directory = os.path.join(os.path.dirname(__file__), 'file')
+    directory = os.path.join(os.path.dirname(__file__), 'Files')
     try:
         files = os.listdir(directory)
         saved_files_message = [
-            '+' + 81*'-' + '+',
-            '\n+' + 81*'-' + '+',
-            '+' + 29*'-' + ' Arquivos no servidor ' + 30*'-' + '+',
-            '+' + 81*'-' + '+',
+            '+' + 96*'-' + '+',
+            '\n+' + 96*'-' + '+',
+            '+' + 37*'-' + ' Arquivos no servidor ' + 37*'-' + '+',
+            '+' + 96*'-' + '+',
         ]
         
         for file in files:
             saved_files_message.append('+-- ' + file)
-            saved_files_message.append('+' + 81*'-' + '+')
+            saved_files_message.append('+' + 96*'-' + '+')
 
         saved_files_message_ = '\n'.join(saved_files_message)
         send_with_error_handling(client_socket, saved_files_message_)
+        
     except Exception as e:
         error_message = [
-            '+' + 81*'-' + '+',
-            '\n+' + 81*'-' + '+',
+            '+' + 96*'-' + '+',
+            '\n+' + 96*'-' + '+',
             f'Erro ao obter os arquivos no servidor: {str(e)}',
-            '+' + 81*'-' + '+\n'
+            '+' + 96*'-' + '+\n'
         ]
         error_message_ = '\n'.join(error_message)
         send_with_error_handling(client_socket, error_message_)
@@ -151,8 +150,8 @@ def files_list(client_socket):
 # Função para solicitar o nome do arquivo ao cliente
 def request_file_name(client_socket, client_address):
     request_message = [
-        '+' + 81*'-' + '+',
-        '\n+' + 81*'-' + '+',
+        '+' + 96*'-' + '+',
+        '\n+' + 96*'-' + '+',
         'Informe o nome do arquivo: '
     ]
     
@@ -166,15 +165,15 @@ def request_file_name(client_socket, client_address):
 
 # Função para encerrar a conexão com o cliente
 def exit(client_socket, client_address):
-    print('\n+' + 81*'-' + '+')
+    print('\n+' + 96*'-' + '+')
     print(f'+-- Fechando a conexão com: {client_address}')
-    print('+' + 81*'-' + '+\n')
+    print('+' + 96*'-' + '+\n')
     
     goodbye_message = [
-        '+' + 81*'-' + '+',
-        '\n+' + 81*'-' + '+',
+        '+' + 96*'-' + '+',
+        '\n+' + 96*'-' + '+',
         f'Adeus {client_address}',
-        '+' + 81*'-' + '+'
+        '+' + 96*'-' + '+'
     ]
     
     goodbye_message_ = '\n'.join(goodbye_message)
@@ -183,9 +182,9 @@ def exit(client_socket, client_address):
 
 # Função para lidar com um cliente
 def handle_client(client_socket, client_address):
-    print('+' + 81*'-' + '+')
+    print('+' + 96*'-' + '+')
     print(f'+-- Conectado em: {client_address}')
-    print('+' + 81*'-' + '+')
+    print('+' + 96*'-' + '+')
     
     while True:
         data = client_socket.recv(1024)   
@@ -195,12 +194,13 @@ def handle_client(client_socket, client_address):
         choice = data.decode().strip()
         try:
             choice = int(choice)
+            
         except ValueError:
             error_message = [
-                '+' + 81*'-' + '+',
-                '\n+' + 81*'-' + '+',
+                '+' + 96*'-' + '+',
+                '\n+' + 96*'-' + '+',
                 'O valor digitado é inválido',
-                '+' + 81*'-' + '+\n'
+                '+' + 96*'-' + '+\n'
             ]
             
             error_message_ = '\n'.join(error_message)
@@ -225,9 +225,9 @@ def main():
     servidor_socket.bind(server_address)
     servidor_socket.listen()
     
-    print('\n+' + 81*'-' + '+')
-    print('+' + 29*'-' + ' Servidor em execução ' + 30*'-' + '+')
-    print('+' + 81*'-' + '+\n')    
+    print('\n+' + 96*'-' + '+')
+    print('+' + 37*'-' + ' Servidor em execução ' + 37*'-' + '+')
+    print('+' + 96*'-' + '+\n')    
 
     while True:
         client_socket, client_address = servidor_socket.accept()                    

@@ -10,11 +10,12 @@ server_address = ('127.0.0.1', 5000)
 def send_with_error_handling(client_socket, data):
     try:
         client_socket.sendall(data.encode('utf-8'))
+        
     except OSError as e:
         # Em caso de erro ao enviar dados, imprime uma mensagem de erro
-        print('\n+' + 81*'-' + '+')
+        print('\n+' + 96*'-' + '+')
         print(f'+-- Erro ao enviar dados: {str(e)}')
-        print('+' + 81*'-' + '+\n')
+        print('+' + 96*'-' + '+\n')
 
 # Função para verificar se a mensagem está vazia e fechar a conexão se estiver
 def check_empty_message(client_socket, data):
@@ -22,49 +23,77 @@ def check_empty_message(client_socket, data):
         try:
             client_socket.close()
             # Em caso de conexão fechada, imprime uma mensagem de encerramento
-            print('+' + 81*'-' + '+')
-            print('+' + 81*'-' + '+')
-            print('\n+' + 81*'-' + '+')
+            print('\n+' + 96*'-' + '+')
             print(f'+-- Conexão encerrada por: {client_socket}')
-            print('+' + 81*'-' + '+\n')
+            print('+' + 96*'-' + '+\n')
             return True
+        
         except Exception as e:
             # Em caso de erro ao fechar a conexão, imprime uma mensagem de erro
-            print('+' + 81*'-' + '+')
-            print('+' + 81*'-' + '+')
-            print('\n+' + 81*'-' + '+')
+            print('\n+' + 96*'-' + '+')
             print(f'+-- Erro ao fechar a conexão: {str(e)}')
-            print('+' + 81*'-' + '+\n')
+            print('+' + 96*'-' + '+\n')
             return False
 
 # Função de mensagem de boas-vindas
 def welcome_message():
-    print('\n+' + 81*'-' + '+')
-    print('+' + 28*'-' + ' Bem-vindo à Rede Órion ' + 29*'-' + '+')
-    print('+' + 81*'-' + '+')
+    print('\n+' + 96*'-' + '+')
+    print('+' + 36*'-' + ' Bem-vindo à Rede Órion ' + 36*'-' + '+')
+    print('+' + 96*'-' + '+')
 
 # Função de exibição das opções do servidor
 def options_message():
-    print('\n+' + 81*'-' + '+')
-    print('+' + 31*'-' + ' Opções do servidor ' + 30*'-' + '+')
-    print('+' + 81*'-' + '+')
-    print('+-- 1 - Consultar uma curiosidade')
-    print('+' + 81*'-' + '+')
+    print('\n+' + 96*'-' + '+')
+    print('+' + 38*'-' + ' Opções do servidor ' + 38*'-' + '+')
+    print('+' + 96*'-' + '+')
+    print('+-- 1 - Consultar uma curidosidade')
+    print('+' + 96*'-' + '+')
     print('+-- 2 - Horário atual do servidor')
-    print('+' + 81*'-' + '+')
-    print('+-- 3 - Baixar arquivo')
-    print('+' + 81*'-' + '+')
-    print('+-- 4 - Listar arquivos do servidor')
-    print('+' + 81*'-' + '+')
+    print('+' + 96*'-' + '+')
+    print('+-- 3 - Fazer download de arquivo')
+    print('+' + 96*'-' + '+')
+    print('+-- 4 - Listar todos os arquivos do servidor')
+    print('+' + 96*'-' + '+')
     print('+-- 0 - Sair')
-    print('+' + 81*'-' + '+')
-    print('+' + 81*'-' + '+')
+    print('+' + 96*'-' + '+')
+    print('+' + 96*'-' + '+')
+
+# Função para criar um novo diretório de download
+def create_directory(directory_name):
+    base_directory = os.path.join(os.path.dirname(__file__))
+    new_directory_path = os.path.join(base_directory, directory_name)
+    
+    try:
+        os.mkdir(new_directory_path.encode('utf-8'))
+        return new_directory_path
+    except FileExistsError:
+        return new_directory_path
+
+# Função para encontrar um diretório de download
+def find_directory():
+    base_directory = os.path.join(os.path.dirname(__file__))
+    try:
+        items_base_directory = os.listdir(base_directory)
+        for item in items_base_directory:
+            item_path = os.path.join(base_directory, item)
+            if os.path.isdir(item_path) and item.lower() in ['download', 'downloads']:
+                return item_path
+            elif os.path.isdir(item_path):
+                return item_path
+            
+        return create_directory('Download')
+
+    except FileNotFoundError:
+        print('+' + 96*'-' + '+')
+        print('+' + 96*'-' + '+')
+        print('\n+' + 96*'-' + '+')
+        print(f'+-- O diretório "{base_directory}" não foi encontrado')
+        print('+' + 96*'-' + '+')
+        return
 
 # Função para receber arquivos
-def file_receive(client_socket, file_name):    
-    directory = os.path.join(os.path.dirname(__file__), 'files')
+def file_receive(client_socket, directory, file_name):        
     file_path = os.path.join(directory, file_name)
-    
     try:
         file_size_str = client_socket.recv(1024).decode()
         file_size = int(file_size_str)
@@ -79,27 +108,19 @@ def file_receive(client_socket, file_name):
                 bytes_received += len(file_part)
         
         # Imprime uma mensagem quando o arquivo é recebido com sucesso
-        print('+' + 81*'-' + '+')
-        print('+' + 81*'-' + '+')
-        print('\n+' + 81*'-' + '+')
-        print(f'+-- O arquivo "{file_name}" foi recebido e salvo na pasta "file"')
-        print('+' + 81*'-' + '+')
-        
-    except FileNotFoundError:
-        # Em caso de arquivo não encontrado, imprime uma mensagem de erro
-        print('+' + 81*'-' + '+')
-        print('+' + 81*'-' + '+')
-        print('\n+' + 81*'-' + '+')
-        print(f'+-- O diretório "file" não existe. Crie-o antes de receber arquivos.')
-        print('+' + 81*'-' + '+')
+        print('+' + 96*'-' + '+')
+        print('+' + 96*'-' + '+')
+        print('\n+' + 96*'-' + '+')
+        print(f'+-- O arquivo "{file_name}" foi recebido e salvo na pasta "{os.path.basename(directory)}"')
+        print('+' + 96*'-' + '+')
         
     except Exception as e:
         # Em caso de erro ao receber arquivo, imprime uma mensagem de erro
-        print('+' + 81*'-' + '+')
-        print('+' + 81*'-' + '+')
-        print('\n+' + 81*'-' + '+')
+        print('+' + 96*'-' + '+')
+        print('+' + 96*'-' + '+')
+        print('\n+' + 96*'-' + '+')
         print(f'+-- Erro ao receber arquivo: {str(e)}')
-        print('+' + 81*'-' + '+')
+        print('+' + 96*'-' + '+')
 
 # Função principal do programa
 def main():
@@ -109,9 +130,9 @@ def main():
         
     except socket.error as e:
         # Em caso de erro de socket, imprime uma mensagem de erro e sai do programa
-        print('\n\n+' + 81*'-' + '+')
+        print('\n\n+' + 96*'-' + '+')
         print(f'+-- Erro de socket: {str(e)}')
-        print('+' + 81*'-' + '+\n')
+        print('+' + 96*'-' + '+\n')
         sys.exit()
         
     welcome_message()
@@ -120,7 +141,7 @@ def main():
         while True:
             options_message()
             choice = input('+-- Informe a opção escolhida: ')
-            print('+' + 81*'-' + '+')
+            print('+' + 96*'-' + '+')
             
             if int(choice) in [0, 1, 2, 3, 4]:
             
@@ -135,24 +156,25 @@ def main():
                     break
                 
                 elif int(choice) == 3:
+                    directory = find_directory()
                     file_name = input(data.decode())
                     send_with_error_handling(client_socket, file_name)
-                    file_receive(client_socket, file_name)
+                    file_receive(client_socket, directory, file_name)
 
                 else:
                     print(data.decode())
                 
             else:
                 # Em caso de opção inválida, imprime uma mensagem de erro
-                print('\n\n+' + 81*'-' + '+')
+                print('\n\n+' + 96*'-' + '+')
                 print(f'+-- O valor "{choice}" não é uma opção válida')
-                print('+' + 81*'-' + '+\n')
+                print('+' + 96*'-' + '+\n')
                  
     except KeyboardInterrupt:
         # Em caso de interrupção pelo usuário, imprime uma mensagem de encerramento
-        print('\n\n+' + 81*'-' + '+')
-        print('+-- O programa foi encerrado')
-        print('+' + 81*'-' + '+\n')
+        print('\n\n+' + 96*'-' + '+')
+        print('+' + 35*'-' + ' O programa foi encerrado ' + 35*'-' + '+')
+        print('+' + 96*'-' + '+\n')
         
     finally:
         # Fecha o socket antes de sair do programa
