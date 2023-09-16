@@ -19,7 +19,7 @@ def send_with_error_handling(client_socket, data):
         print('+' + 81*'-' + '+\n')
 
 # Função para verificar se a mensagem está vazia e fechar a conexão se estiver
-def check_empty_message(client_socket, addr, data):
+def check_empty_message(client_socket, client_address, data):
     if not data:
         try:
             client_socket.close()
@@ -27,7 +27,7 @@ def check_empty_message(client_socket, addr, data):
             print('+' + 81*'-' + '+')
             print('+' + 81*'-' + '+')
             print('\n+' + 81*'-' + '+')
-            print(f'+-- Conexão encerrada por: {client_socket}')
+            print(f'+-- Conexão encerrada por: {client_address}')
             print('+' + 81*'-' + '+\n')
             return True
         
@@ -63,7 +63,7 @@ def query_curiosity(client_socket):
     send_with_error_handling(client_socket, distributed_curiosity_message)
 
 # Função para enviar a hora atual do servidor
-def hour(client_socket):
+def current_time(client_socket):
     try:
         time = datetime.now()
         current_time_message = [
@@ -91,7 +91,7 @@ def hour(client_socket):
 
 # Função para enviar um arquivo ao cliente
 def research_file(client_socket, file_name):
-    directory = os.path.join(os.path.dirname(__file__), 'file')
+    directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
         if file_name in os.listdir(directory):
             file_path = os.path.join(directory, file_name)
@@ -152,7 +152,7 @@ def files_list(client_socket):
         send_with_error_handling(client_socket, error_message_)
 
 # Função para solicitar o nome do arquivo ao cliente
-def request_file_name(client_socket, addr):
+def request_file_name(client_socket, client_address):
     request_message = [
         '+' + 81*'-' + '+',
         '\n+' + 81*'-' + '+',
@@ -164,19 +164,19 @@ def request_file_name(client_socket, addr):
     
     file_name = client_socket.recv(1024).decode().strip()
     
-    if not check_empty_message(client_socket, addr, file_name):
+    if not check_empty_message(client_socket, client_address, file_name):
         research_file(client_socket, file_name)
 
 # Função para encerrar a conexão com o cliente
-def exit(client_socket, addr):
+def exit(client_socket, client_address):
     print('\n+' + 81*'-' + '+')
-    print(f'+-- Fechando a conexão com: {addr}')
+    print(f'+-- Fechando a conexão com: {client_address}')
     print('+' + 81*'-' + '+\n')
     
     goodbye_message = [
         '+' + 81*'-' + '+',
         '\n+' + 81*'-' + '+',
-        f'Adeus {addr}',
+        f'Adeus {client_address}',
         '+' + 81*'-' + '+'
     ]
     
@@ -185,14 +185,14 @@ def exit(client_socket, addr):
     client_socket.close()
 
 # Função para lidar com um cliente
-def handle_client(client_socket, addr):
+def handle_client(client_socket, client_address):
     print('+' + 81*'-' + '+')
-    print(f'+-- Conectado em: {addr}')
+    print(f'+-- Conectado em: {client_address}')
     print('+' + 81*'-' + '+')
     
     while True:
         data = client_socket.recv(1024)   
-        if check_empty_message(client_socket, addr, data):
+        if check_empty_message(client_socket, client_address, data):
             break
         
         choice = data.decode().strip()
@@ -212,14 +212,14 @@ def handle_client(client_socket, addr):
 
         match choice:
             case 0:
-                exit(client_socket, addr)
+                exit(client_socket, client_address)
                 break
             case 1:
                 query_curiosity(client_socket)
             case 2:
-                hour(client_socket)
+                current_time(client_socket)
             case 3:
-                request_file_name(client_socket, addr)
+                request_file_name(client_socket, client_address)
             case 4:
                 files_list(client_socket)
                 
@@ -234,8 +234,8 @@ def main():
     print('+' + 81*'-' + '+\n')    
 
     while True:
-        client_socket, addr = servidor_socket.accept()                    
-        client_thread = threading.Thread(target=handle_client, args=(client_socket, addr))
+        client_socket, client_address = servidor_socket.accept()                    
+        client_thread = threading.Thread(target=handle_client, args=(client_socket, client_address))
         client_thread.start()
         
 if __name__ == '__main__':

@@ -54,7 +54,7 @@ def options_message():
     print('+' + 81*'-' + '+')
     print('+-- 2 - Horário atual do servidor')
     print('+' + 81*'-' + '+')
-    print('+-- 3 - Salvar arquivo (download)')
+    print('+-- 3 - Fazer download de arquivo')
     print('+' + 81*'-' + '+')
     print('+-- 4 - Listar todos os arquivos do servidor')
     print('+' + 81*'-' + '+')
@@ -64,7 +64,7 @@ def options_message():
 
 # Função para receber arquivos
 def file_receive(client_socket, file_name):    
-    directory = os.path.join(os.path.dirname(__file__), 'file')
+    directory = os.path.join(os.path.dirname(__file__), 'files')
     file_path = os.path.join(directory, file_name)
     try:
         file_size_str = client_socket.recv(1024).decode()
