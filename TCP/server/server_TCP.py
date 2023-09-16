@@ -7,38 +7,51 @@ import os  # Para manipulação de arquivos e diretórios
 # Define o endereço do servidor como localhost (127.0.0.1) e a porta 5000
 server_address = ('localhost', 5000)
 
-# Função para criar o diretório de Logs
-def create_log_directory(base_directory):
-    new_directory_path = os.path.join(base_directory, 'logs')  
-    try:
-        os.mkdir(new_directory_path.encode('utf-8'))
-        return new_directory_path
-    except FileExistsError:
-        return new_directory_path
+# Função para criar o arquivo de logs
+def check_and_create_log_file():
+    base_directory = os.path.dirname(__file__)
+    logs_directory = os.path.join(base_directory, 'logs')
+    file_path = os.path.join(logs_directory, 'server_log.txt')
+    
+    if not os.path.exists(logs_directory):
+        os.makedirs(logs_directory)
+        
+    if not os.path.exists(file_path):
+        log_message = [
+            '+' + 96*'-' + '+',
+            '+' + 39*'-' + ' Logs do servidor ' + 39*'-' + '+',
+            '+' + 96*'-' + '+\n'
+        ]
+        
+        log_message_ = '\n'.join(log_message)
+        with open(file_path, 'a') as log_file:
+            log_file.write(log_message_)
+
+    return file_path
 
 # Função para registrar uma conexão em um arquivo de log
-def log_connection(client_address):
-    base_directory = os.path.join(os.path.dirname(__file__))
-    logs_directory = os.path.join(base_directory, 'logs')
-
-    if 'logs' in os.listdir(base_directory):
-        if 'server_log' in os.listdir(logs_directory):
-            file_path = os.path.join(logs_directory, 'server_log')
-        else:
-            file_path = os.path.join(logs_directory, 'server_log')
-    else:
-        os.makedirs(logs_directory)
-        file_path = os.path.join(logs_directory, 'server_log')
-   
+def log_connection(client_address, connection_time): 
+    file_path = check_and_create_log_file()
+    
     log_message = [
         '\n+' + 96*'-' + '+',
-        f'Conexão estabelecida com: {client_address}',
+        f'Conexão estabelecida com: {client_address} - Tempo de conexão: {connection_time}',
         '+' + 96*'-' + '+'
     ]
 
     log_message_ = '\n'.join(log_message)
     with open(file_path, 'a') as log_file:
         log_file.write(log_message_)
+
+# Função para calcular o tempo de conexão
+def calculate_connection_time(start_time):
+    end_time = datetime.now()
+    connection_time = end_time - start_time
+    seconds = connection_time.total_seconds()
+    hours, remainder = divmod(seconds, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    formatted_time = "{:02}:{:02}:{:02}".format(int(hours), int(minutes), int(seconds))
+    return formatted_time
 
 # Função para enviar dados com tratamento de erro
 def send_with_error_handling(client_socket, data):
@@ -151,6 +164,22 @@ def research_file(client_socket, file_name):
         error_message_ = '\n'.join(error_message)
         send_with_error_handling(client_socket, error_message_)
 
+# Função para solicitar o nome do arquivo ao cliente
+def request_file_name(client_socket, client_address):
+    request_message = [
+        '+' + 96*'-' + '+',
+        '\n+' + 96*'-' + '+',
+        'Informe o nome do arquivo: '
+    ]
+    
+    request_message_ = '\n'.join(request_message)
+    send_with_error_handling(client_socket, request_message_)
+    
+    file_name = client_socket.recv(1024).decode().strip()
+    
+    if not check_empty_message(client_socket, client_address, file_name):
+        research_file(client_socket, file_name)
+
 # Função para listar os arquivos no servidor
 def files_list(client_socket):
     directory = os.path.join(os.path.dirname(__file__), 'files')
@@ -180,22 +209,6 @@ def files_list(client_socket):
         error_message_ = '\n'.join(error_message)
         send_with_error_handling(client_socket, error_message_)
 
-# Função para solicitar o nome do arquivo ao cliente
-def request_file_name(client_socket, client_address):
-    request_message = [
-        '+' + 96*'-' + '+',
-        '\n+' + 96*'-' + '+',
-        'Informe o nome do arquivo: '
-    ]
-    
-    request_message_ = '\n'.join(request_message)
-    send_with_error_handling(client_socket, request_message_)
-    
-    file_name = client_socket.recv(1024).decode().strip()
-    
-    if not check_empty_message(client_socket, client_address, file_name):
-        research_file(client_socket, file_name)
-
 # Função para encerrar a conexão com o cliente
 def exit(client_socket, client_address):
     print('\n+' + 96*'-' + '+')
@@ -215,7 +228,7 @@ def exit(client_socket, client_address):
 
 # Função para lidar com um cliente
 def handle_client(client_socket, client_address):
-    log_connection(client_address)
+    start_time = datetime.now() 
     
     print('+' + 96*'-' + '+')
     print(f'+-- Conectado em: {client_address}')
@@ -254,6 +267,9 @@ def handle_client(client_socket, client_address):
             case 4:
                 files_list(client_socket)
                 
+    connection_time = calculate_connection_time(start_time)
+    log_connection(client_address, connection_time)
+               
 # Função principal do servidor
 def main():
     servidor_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
