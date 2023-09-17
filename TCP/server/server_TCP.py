@@ -156,7 +156,7 @@ def current_time(client_socket):
         send_with_error_handling(client_socket, error_message_)
 
 # Função para enviar um arquivo ao cliente
-def research_file(client_socket, file_name):
+def find_and_send_file(client_socket, file_name):
     request_logs(3, file_name)
     directory = os.path.join(os.path.dirname(__file__), 'files')
     try:
@@ -204,7 +204,7 @@ def request_file_name(client_socket, client_address):
     file_name = client_socket.recv(1024).decode().strip()
     
     if not check_empty_message(client_socket, client_address, file_name):
-        research_file(client_socket, file_name)
+        find_and_send_file(client_socket, file_name)
 
 # Função para listar os arquivos no servidor
 def files_list(client_socket):
