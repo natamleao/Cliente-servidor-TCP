@@ -35,7 +35,7 @@ def connection_log(client_address):
     
     log_message = [
         '\n+' + 96*'-' + '+',
-        f'+-- Conexão estabelecida com: {client_address}\n'
+        f'+-- Conexão estabelecida com: {client_address} às {datetime.now().strftime("%H:%M:%S")} horas\n'
     ]
 
     log_message_ = '\n'.join(log_message)
