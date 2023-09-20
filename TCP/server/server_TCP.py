@@ -1,8 +1,8 @@
 # Importação das bibliotecas necessárias
-import socket  # Para comunicação via socket
-import threading  # Para suportar múltiplos clientes simultaneamente
+import socket                  # Para comunicação via socket
+import threading               # Para suportar múltiplos clientes simultaneamente
 from datetime import datetime  # Para obter a hora atual
-import os  # Para manipulação de arquivos e diretórios
+import os                      # Para manipulação de arquivos e diretórios
 
 # Define o endereço do servidor como localhost (127.0.0.1) e a porta 5000
 server_address = ('localhost', 5000)
