@@ -123,8 +123,8 @@ Server-Client/
 Clone o repositório:
 
 ```bash
-git clone git@github.com:natamleao/Server-Client.git
-cd Server-Client
+git clone git@github.com:natamleao/Client-Server.git
+cd Client-Server
 ````
 
 ---
