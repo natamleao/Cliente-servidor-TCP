@@ -1,45 +1,188 @@
-<div align="justify">
+# Servidor de Comunicação Multifuncional
 
-# Trabalho de Redes de Computadores: Servidor de Comunicação Multifuncional
+![Language](https://img.shields.io/badge/language-Python-blue)
+![Protocol](https://img.shields.io/badge/protocol-TCP-green)
+![Architecture](https://img.shields.io/badge/architecture-client--server-orange)
+![Networking](https://img.shields.io/badge/networking-sockets-lightgrey)
+![License](https://img.shields.io/badge/license-MIT-lightgrey)
 
-</div>
+---
+
+## Sobre o projeto
 
 > [!NOTE]
-> Este projeto é um exemplo de servidor de comunicação multifuncional desenvolvido como parte de um trabalho acadêmico na disciplina de Redes de Computadores. O servidor é capaz de lidar com múltiplos clientes simultaneamente e oferece várias funcionalidades, incluindo consulta de curiosidades sobre física quântica, obtenção da hora atual do servidor, envio de arquivos e listagem de arquivos no servidor.
+> Este projeto implementa um **servidor de comunicação multifuncional em Python**, capaz de atender múltiplos clientes simultaneamente utilizando **sockets TCP**.
 
-<div align="justify">
+O sistema permite que clientes se conectem ao servidor e utilizem diferentes funcionalidades, incluindo:
 
-## Funcionalidades Principais
+- consulta de curiosidades sobre física quântica  
+- obtenção da hora atual do servidor  
+- envio de arquivos  
+- listagem de arquivos disponíveis  
 
-### 1. Curiosidades sobre Física Quântica
-Os clientes podem solicitar curiosidades sobre física quântica ao servidor. O servidor responde com informações fascinantes sobre tópicos relacionados à física quântica, como teletransportação quântica e emaranhamento quântico.
+O foco do projeto está na exploração de **comunicação cliente-servidor**, tratamento de conexões e organização de funcionalidades em um único serviço.
 
-### 2. Hora do Servidor
-Os clientes podem solicitar a hora atual do servidor. O servidor responde com a hora atual no formato HH:MM:SS.
-
-### 3. Envio de Arquivos
-Os clientes podem solicitar o envio de arquivos específicos do servidor. O servidor verifica a existência do arquivo solicitado e, se encontrado, envia o arquivo para o cliente.
-
-### 4. Listagem de Arquivos no Servidor
-Os clientes podem solicitar uma lista de arquivos disponíveis no servidor. O servidor responde com a lista de arquivos no diretório de arquivos do servidor.
-
-## Funcionamento Geral
-O servidor é implementado em Python e utiliza soquetes (sockets) para estabelecer conexões com os clientes. O código é estruturado de forma a lidar com exceções e erros de comunicação de maneira robusta, garantindo uma experiência confiável aos clientes.
-
-</div>
+---
 
 > [!IMPORTANT]
-> ## Como Usar
-> 1. Clone este repositório em sua máquina local.
-> 2. Certifique-se de ter o Python instalado em sua máquina.
-> 3. Execute o servidor com o comando `python ./server/server_TCP.py`. O servidor estará em execução e aguardando conexões de clientes.
-> 4. Execute o cliente com o comando `python ./client/client_TCP.py` e estabeleça uma conexão com o servidor.
-> 5. Utilize as opções do cliente para interagir com o servidor, como solicitar curiosidades, obter a hora atual, enviar ou listar arquivos no servidor.
+> ## Tecnologias utilizadas
+>
+> * **Python**
+> * **Sockets TCP**
+> * Arquitetura **cliente-servidor**
 
-> [!NOTE]
-> Este projeto é uma demonstração de um servidor de comunicação versátil que pode ser usado como base para aplicações mais complexas de rede. Ele também serve como uma oportunidade de aprendizado para entender os conceitos de comunicação cliente-servidor em redes de computadores.
+---
 
-* **Autores:** Eliziane, Lara e Natam
-* **Instituição:** Universidade Federal do Ceará (UFC) - Campus Russas
-* **Disciplina:** Redes de Computadores
-* **Data de Conclusão:** 18/09/2023
+## Conceitos aplicados
+
+Este projeto trabalha conceitos fundamentais de redes e sistemas distribuídos:
+
+- comunicação via sockets (`socket`)  
+- modelo cliente-servidor  
+- manipulação de conexões simultâneas  
+- envio e recebimento de dados pela rede  
+- tratamento de exceções em comunicação  
+- organização de protocolos simples de interação  
+
+---
+
+## Funcionalidades
+
+### Curiosidades sobre física quântica
+
+O cliente pode solicitar informações ao servidor, que responde com curiosidades sobre tópicos como:
+
+- emaranhamento quântico  
+- teletransporte quântico  
+
+---
+
+### Hora do servidor
+
+O servidor retorna a hora atual no formato:
+
+```
+
+HH:MM:SS
+
+```
+
+---
+
+### Envio de arquivos
+
+O cliente pode requisitar arquivos disponíveis no servidor.
+
+O sistema:
+
+- verifica se o arquivo existe  
+- realiza o envio via socket  
+- trata erros de forma segura  
+
+---
+
+### Listagem de arquivos
+
+O cliente pode solicitar a lista de arquivos disponíveis no servidor.
+
+O servidor responde com os arquivos presentes no diretório configurado.
+
+---
+
+## Funcionamento
+
+O sistema é dividido em dois componentes principais:
+
+- **Servidor** → responsável por gerenciar conexões e responder requisições  
+- **Cliente** → responsável por enviar comandos e receber respostas  
+
+A comunicação ocorre via **TCP**, garantindo entrega confiável dos dados.
+
+---
+
+## Estrutura do projeto
+
+```
+
+Server-Client/
+│
+├── server/        # Implementação do servidor
+├── client/        # Implementação do cliente
+│
+├── files/         # Diretório de arquivos disponíveis para envio
+│
+├── README.md      # Documentação
+└── LICENSE        # Licença 
+
+````
+
+---
+
+## Instalação
+
+Clone o repositório:
+
+```bash
+git clone git@github.com:natamleao/Server-Client.git
+cd Server-Client
+````
+
+---
+
+## Execução
+
+### Iniciar o servidor
+
+```bash
+python ./server/server_TCP.py
+```
+
+---
+
+### Iniciar o cliente
+
+Em outro terminal:
+
+```bash
+python ./client/client_TCP.py
+```
+
+---
+
+## Como usar
+
+Após iniciar o cliente:
+
+* conectar ao servidor
+* escolher a funcionalidade desejada
+* interagir via terminal
+
+---
+
+## Observações
+
+> [!IMPORTANT]
+> Este projeto é uma implementação simplificada com foco em aprendizado de comunicação em rede e organização de serviços.
+
+> [!WARNING]
+> Não inclui:
+>
+> * autenticação
+> * criptografia
+> * controle avançado de concorrência
+
+---
+
+## Licença
+
+Este projeto está licenciado sob a **MIT License**.
+
+---
+
+## Autor
+
+**Natam Leão Ferreira**
+
+Conclusão: **2023**
+
+---
