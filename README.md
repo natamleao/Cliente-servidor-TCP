@@ -173,9 +173,10 @@ Após iniciar o cliente:
 
 ---
 
-## Licença
-
-Este projeto está licenciado sob a **MIT License**.
+> [!WARNING]
+> ## Licença
+> 
+> Este projeto está licenciado sob a **MIT License**.
 
 ---
 
