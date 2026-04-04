@@ -104,7 +104,7 @@ A comunicação ocorre via **TCP**, garantindo entrega confiável dos dados.
 
 ```
 
-Server-Client/
+Client-Server/
 │
 ├── server/        # Implementação do servidor
 ├── client/        # Implementação do cliente
