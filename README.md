@@ -174,9 +174,10 @@ Após iniciar o cliente:
 ---
 
 > [!WARNING]
+>
 > ## Licença
-> 
-> Este projeto está licenciado sob a **MIT License**.
+>
+> Este projeto está sob a **Licença MIT**.
 
 ---
 
@@ -184,6 +185,7 @@ Após iniciar o cliente:
 
 **Natam Leão Ferreira**
 
-Conclusão: **2023**
+Conclusão: **2026**
 
 ---
+
